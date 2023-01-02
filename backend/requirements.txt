@@ -1,0 +1,11 @@
+flask
+flask-sqlalchemy
+flask-marshmallow
+flask-bcrypt
+python-decouple
+python-dotenv
+flask-session
+redis
+flask-cors
+marshmallow-sqlalchemy
+psycopg2-binary

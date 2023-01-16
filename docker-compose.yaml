@@ -1,0 +1,19 @@
+version: "2.13.0"
+services:
+  backend:
+    build: ./backend
+    container_name: backend_c
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_APP=app.py
+  frontend:
+    build: ./frontend
+    container_name: frontend_c
+    ports:
+      - '3000:3000'
+    stdin_open: true
+  rediscont:
+    image: redis:alpine
+    ports:
+      - 6379:6379

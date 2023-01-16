@@ -9,3 +9,4 @@ redis
 flask-cors
 marshmallow-sqlalchemy
 psycopg2-binary
+mysqlclient

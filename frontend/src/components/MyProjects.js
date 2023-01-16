@@ -6,11 +6,11 @@ import UpdateProjects from './UpdateProjects';
 import Layout from './Layout';
 import { UserContext } from '../contexts/UserContext'
 
-function Admin() {
+function MyProjects() {
   const { users, updateUser } = useContext(UserContext);
   const [projects, setProjects] = useState([]);
   const [editedProject, setEditedProject] = useState(null);
-  const isAdmin = true;
+  const isAdmin = false;
 
   useEffect(() => {
     (async () => {
@@ -68,7 +68,7 @@ function Admin() {
     {users != null ? (
     <div className='App'>
       <Layout/>
-      <h2 className="text-center">ADMIN CONTROL</h2>
+      <h2 className="text-center">MY PROJECTS</h2>
       <br/>
       <table className="table table-striped">
         <thead>
@@ -79,12 +79,12 @@ function Admin() {
             <th scope="col">UserName</th>
             <th scope="col">Date</th>
             <th scope="col">Rating</th>
-            <th scope="col">Choose</th>
-            <th scope="col">Submit</th>
+            <th scope="col">Update</th>
+            <th scope="col">Delete</th>
           </tr>
         </thead>
         <tbody>
-          <Projects projects = {projects} users={null} admin={isAdmin} editProject = {editProject} deleteProject = {deleteProject} />
+          <Projects projects = {projects} users={users} admin={isAdmin} editProject = {editProject} deleteProject = {deleteProject} />
         </tbody>
       </table>
       {editedProject ? <UpdateProjects project = {editedProject} updatedData = {updatedData} setNull = {setNull}/> : null}
@@ -92,4 +92,4 @@ function Admin() {
   )
 }
 
-export default Admin
+export default MyProjects

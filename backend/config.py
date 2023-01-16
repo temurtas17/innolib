@@ -9,7 +9,7 @@ class ApplicationConfig:
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = True
-    SQLALCHEMY_DATABASE_URI = r'mysql://root:19932755@localhost/innolibsdb'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///innolibsdb.db'
 
     SESSION_TYPE = "redis"
     SESSION_PERMANENT = False

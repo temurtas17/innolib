@@ -1,11 +1,13 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import Projects from './Projects';
-import Form from './Form';
+import UpdateProjects from './UpdateProjects';
+import Layout from './Layout';
 
 function Home() {
   const [projects, setProjects] = useState([])
   const [editedProject, setEditedProject] = useState(null)
+  const isAdmin = false;
 
   useEffect(() => {
     fetch('http://127.0.0.1:5000/get', {
@@ -49,10 +51,27 @@ function Home() {
 
   return (
     <div className='App'>
+      <Layout/>
       <h2 className="text-center">PROJECTS</h2>
       <br/>
-      <Projects projects = {projects} editProject = {editProject} deleteProject = {deleteProject}/>
-      {editedProject ? <Form project = {editedProject} updatedData = {updatedData} setNull = {setNull}/> : null}
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">UserName</th>
+            <th scope="col">Date</th>
+            <th scope="col">Rating</th>
+            <th scope="col">Update</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <Projects projects = {projects} users={null} admin={isAdmin} editProject = {editProject} deleteProject = {deleteProject}/>
+        </tbody>
+      </table>
+      {editedProject ? <UpdateProjects project = {editedProject} updatedData = {updatedData} setNull = {setNull}/> : null}
     </div>
   )
 }

@@ -1,11 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext, useRef, useLayoutEffect } from "react";
 import httpClient from "../httpClient";
+import Layout from "./Layout";
+import { UserContext } from '../contexts/UserContext'
 
-const AddProjects = (props) => {
+const AddProjects = () => {
+  const { users, updateUser } = useContext(UserContext);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [userid, setUserid] = useState(props.id);
-  const [name, setName] = useState(props.name);
+  const [userid, setUserid] = useState("");
+  const [name, setName] = useState("");
+
+  const firstUpdate = useRef(true);
+  useLayoutEffect(() => {
+    if (firstUpdate.current) {
+      return;
+    }
+    setUserid(users.id);
+    setName(users.name);
+  });
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const resp = await httpClient.get("//localhost:5000/@me");
+        updateUser(resp.data);
+        firstUpdate.current = false;
+      } catch (error) {
+        console.log("Not authenticated");
+      }
+    })();
+  }, []);
 
   const addProject = async () => {
     try {
@@ -25,6 +49,10 @@ const AddProjects = (props) => {
   };
 
   return (
+    <>
+    {users != null ? (
+    <>
+    <Layout/>
     <div className="Auth-form-container">
       <form className="Auth-form">
         <div className="Auth-form-content">
@@ -55,7 +83,8 @@ const AddProjects = (props) => {
           </div>
         </div>
       </form>
-    </div>
+    </div></>):(null)}
+    </>
   );
 };
 

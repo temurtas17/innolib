@@ -21,6 +21,7 @@ class Projects(db.Model):
     title = db.Column(db.String(100))
     body = db.Column(db.Text())
     date = db.Column(db.DateTime, default = datetime.datetime.now)
+    rated = db.Column(db.String(32))
     userid = db.Column(db.String(32), db.ForeignKey('users.id'))
     name = db.Column(db.String(80))
     users = db.relationship('Users', backref=db.backref('projects', lazy=True))

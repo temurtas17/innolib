@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import httpClient from "../httpClient";
-import Layout from "./Layout.js"
+import Home from "./Home.js"
+import { UserContext } from '../contexts/UserContext'
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState(null);
+  const { users, updateUser } = useContext(UserContext);
+
 
   const logInUser = async () => {
     try {
@@ -22,16 +24,11 @@ const Login = () => {
     }
   };
 
-  const logoutUser = async () => {
-    await httpClient.post("//localhost:5000/logout");
-    window.location.href = "/";
-  };
-
   useEffect(() => {
     (async () => {
       try {
         const resp = await httpClient.get("//localhost:5000/@me");
-        setUser(resp.data);
+        updateUser(resp.data);
       } catch (error) {
         console.log("Not authenticated");
       }
@@ -40,10 +37,8 @@ const Login = () => {
 
   return (
     <div>
-      {user != null ? (
-        <div>
-          <Layout user={user} logoutUser={logoutUser}/>
-        </div>
+      {users != null ? (
+        <Home/>
       ) : (
         <div className="Auth-form-container">
           <form className="Auth-form">
